@@ -17,6 +17,7 @@ const Home = (props) => {
 
   return (
     <Fragment>
+      <h1>Yes</h1>
       <div className="container">
         <Navbar />
         {props.loading === true ? null : (
