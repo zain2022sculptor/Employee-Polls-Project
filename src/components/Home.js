@@ -17,12 +17,11 @@ const Home = (props) => {
 
   return (
     <Fragment>
-      <h1>Yes</h1>
       <div className="container">
         <Navbar />
         {props.loading === true ? null : (
           <Routes>
-            <Route path="/" exact element={<Dashboard />} />
+            <Route path="/home" exact element={<Dashboard />} />
             <Route path="/new" element={<NewQuestion />} />
             <Route path="/question/:id" element={<ShowQuestion />} />
             <Route path="/leaderboard" element={<Leaderboard />} />

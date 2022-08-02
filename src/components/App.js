@@ -9,14 +9,39 @@ import Navbar from "./Navbar";
 import NewQuestion from "./NewQuestion";
 import ShowQuestion from "./ShowQuestion";
 import { setAuthedUser } from "../actions/authedUser";
+import Login from "./Login";
 
 function App(props) {
-  console.log("props in app", props);
-  props.dispatch(setAuthedUser("sarahedo"));
-  console.log("props in app", props);
-  return <Home />;
+  useEffect(() => {
+    props.dispatch(handleInitialData());
+  }, []);
+
+  return (
+    <Fragment>
+      <div className="container">
+        {props.loggedIn ? <Navbar /> : null}
+        {props.loading === true ? null : (
+          <div>
+            <Routes>
+              <Route path="/" exact element={<Login />} />
+              <Route path="/home" element={<Dashboard />} />
+              <Route path="/new" element={<NewQuestion />} />
+              <Route path="/question/:id" element={<ShowQuestion />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+            </Routes>
+          </div>
+        )}
+      </div>
+    </Fragment>
+  );
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ authedUser, users, questions }) => {
+  return {
+    loggedIn: !(authedUser === null),
+    loading: false,
+    //Object.keys(users).length === 0 && Object.keys(questions).length === 0,
+  };
+};
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);

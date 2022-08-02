@@ -1,13 +1,36 @@
 import NewQuestionBlock from "./NewQuestionBlock";
 import DoneQuestionBlock from "./DoneQuestionBlock";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.loggedIn) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div>
-      <NewQuestionBlock />
-      <DoneQuestionBlock />
+      {props.loggedIn ? (
+        <h2>Redirecting to Login</h2>
+      ) : (
+        <div>
+          <NewQuestionBlock />
+          <DoneQuestionBlock />
+        </div>
+      )}
     </div>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = ({ authedUser }) => {
+  return {
+    loggedIn: authedUser === null,
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);
