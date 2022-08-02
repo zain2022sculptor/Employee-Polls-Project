@@ -18,7 +18,7 @@ const Dashboard = (props) => {
       {props.loggedIn ? (
         <h2>Redirecting to Login</h2>
       ) : (
-        <div>
+        <div data-testid="result">
           <NewQuestionBlock />
           <DoneQuestionBlock />
         </div>

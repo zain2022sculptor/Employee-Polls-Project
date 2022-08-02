@@ -12,23 +12,25 @@ const Navbar = (props) => {
     navigate("/");
   };
   return (
-    <nav className="nav">
-      <ul>
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
-        <li>
-          <Link to="/leaderboard">Leaderboard</Link>
-        </li>
-        <li>
-          <Link to="/new">New</Link>
-        </li>
-      </ul>
-      <span>
+    <div>
+      <nav className="nav">
+        <ul>
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+          <li>
+            <Link to="/leaderboard">Leaderboard</Link>
+          </li>
+          <li>
+            <Link to="/new">New</Link>
+          </li>
+        </ul>
+      </nav>
+      <div>
         <h4>{props.authedUser}</h4>
         <button onClick={handleLogout}>Logout</button>
-      </span>
-    </nav>
+      </div>
+    </div>
   );
 };
 

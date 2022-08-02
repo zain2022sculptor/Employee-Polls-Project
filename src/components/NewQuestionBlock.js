@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import Question from "./Question";
 
 const NewQuestionBlock = (props) => {
-  console.log(props);
   return (
     <div className="containter center">
       <h3>New Questions</h3>

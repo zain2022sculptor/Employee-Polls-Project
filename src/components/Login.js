@@ -48,6 +48,7 @@ const Login = (props) => {
       </FormControl>
 
       <Button
+        data-testid="button"
         sx={{ mt: 4 }}
         fullWidth
         variant="contained"

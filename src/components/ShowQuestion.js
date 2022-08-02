@@ -21,7 +21,6 @@ const withRouter = (Component) => {
 };
 
 const ShowQuestion = (props) => {
-  //console.log("Props form showquestion", props.question);
   const [vote, setVote] = useState(
     props.user.answers[props.id] ? props.user.answers[props.id] : ""
   );
@@ -35,8 +34,6 @@ const ShowQuestion = (props) => {
 
   const totalAnswers = optionOneAnswers + optionTwoAnswers;
 
-  //console.log("user answer", userAnwser);
-
   const handleVote = (e) => {
     e.preventDefault();
     setVote(e.target.value);
@@ -44,26 +41,22 @@ const ShowQuestion = (props) => {
     console.log(e.target.value);
 
     props.dispatch(handleAddQuestAns(props.id, e.target.value));
-
-    // if (e.target.name === "optionOne") {
-    //   const answer = "optionOne";
-    //   console.log(props.id, answer);
-    //   props.dispatch(handleAddQuestAns(props.id, answer));
-    // } else if (e.target.name === "optionTwo") {
-    //   console.log("optionTwo");
-    // }
   };
 
   return (
     <div>
-      <h2 className="center">Poll by {props.question.author}</h2>
-      <img
-        src={props.user.avatarURL}
-        alt={`Avatar of ${props.question.author}`}
-        className="avatar center"
-      />
+      <div className="question" data-testid="button">
+        <img
+          src={props.avatar}
+          alt={`Avatar of ${props.question.author}`}
+          className="avatar"
+        />
+        <h2 className="center">Poll by {props.question.author}</h2>
+      </div>
       {answered ? (
-        <h5 className="center">Answered by: {totalAnswers} of 4 Employees</h5>
+        <h5 className="center" data-testid="show-answers">
+          Answered by: {totalAnswers} of 4 Employees
+        </h5>
       ) : (
         ""
       )}
@@ -74,6 +67,7 @@ const ShowQuestion = (props) => {
         <FormControl>
           <RadioGroup
             name="radio-buttons-group"
+            data-testid="radio-button"
             value={vote}
             onChange={handleVote}
           >
@@ -117,11 +111,13 @@ const mapStateToProps = ({ authedUser, questions, users }, props) => {
   const { id } = props.router.params;
   const question = questions[id];
   const user = users[authedUser];
+  const avatar = users[question.author].avatarURL;
 
   return {
     id,
     question,
     user,
+    avatar,
   };
 };
 

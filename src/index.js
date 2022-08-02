@@ -9,9 +9,12 @@ import reducer from "./reducers";
 import middleware from "./middleware";
 import { BrowserRouter as Router } from "react-router-dom";
 
-const store = createStore(reducer, middleware);
+export const store = createStore(reducer, middleware);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const rootElement =
+  document.getElementById("root") || document.createElement("div");
+const root = ReactDOM.createRoot(rootElement);
+
 root.render(
   <Provider store={store}>
     <Router>

@@ -39,7 +39,7 @@ const NewQuestion = (props) => {
       ) : (
         <div>
           <h3 className="center">Create a new Poll</h3>
-          <form className="new-tweet" onSubmit={handleSubmit}>
+          <form className="new-question" onSubmit={handleSubmit}>
             <h4 className="center">First Option</h4>
             <textarea
               name="option1"

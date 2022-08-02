@@ -25,7 +25,6 @@ const Leaderboard = (props) => {
         <h2>Redirecting to Login</h2>
       ) : (
         <div>
-          <h1>Leaderboard</h1>
           <Table>
             <TableHead>
               <TableRow>

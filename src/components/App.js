@@ -39,8 +39,6 @@ function App(props) {
 const mapStateToProps = ({ authedUser, users, questions }) => {
   return {
     loggedIn: !(authedUser === null),
-    loading: false,
-    //Object.keys(users).length === 0 && Object.keys(questions).length === 0,
   };
 };
 

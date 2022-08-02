@@ -1,16 +1,9 @@
 import { connect } from "react-redux";
 import { formatDate } from "../utils/helper";
 import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 const Question = (props) => {
-  //console.log(props.Question.id);
   const navigate = useNavigate();
 
   const handleNav = () => {
@@ -24,7 +17,9 @@ const Question = (props) => {
             <TableCell>{props.author}</TableCell>
             <TableCell>{props.datetime}</TableCell>
             <TableCell>
-              <button onClick={handleNav}>Show</button>
+              <button onClick={handleNav} data-testid="button">
+                Show
+              </button>
             </TableCell>
           </TableRow>
         </TableBody>
