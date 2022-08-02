@@ -1,3 +1,10 @@
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
 import { connect } from "react-redux";
 import Question from "./Question";
 

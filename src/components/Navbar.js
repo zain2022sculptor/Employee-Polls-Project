@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
+  console.log(props.authedUser);
 
   const handleLogout = () => {
     props.dispatch(setAuthedUser(null));
@@ -22,10 +23,15 @@ const Navbar = (props) => {
         <li>
           <Link to="/new">New</Link>
         </li>
-        <button onClick={handleLogout}>Logout</button>
       </ul>
+      <span>
+        <h4>{props.authedUser}</h4>
+        <button onClick={handleLogout}>Logout</button>
+      </span>
     </nav>
   );
 };
 
-export default connect()(Navbar);
+const mapStateToProps = ({ authedUser }) => ({ authedUser });
+
+export default connect(mapStateToProps)(Navbar);

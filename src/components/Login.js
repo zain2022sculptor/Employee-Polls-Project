@@ -1,4 +1,10 @@
-import { InputLabel, Select, MenuItem, FormControl } from "@mui/material";
+import {
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  Button,
+} from "@mui/material";
 import { useState } from "react";
 import { setAuthedUser } from "../actions/authedUser";
 import { connect } from "react-redux";
@@ -14,7 +20,6 @@ const Login = (props) => {
     e.preventDefault();
     setUser(e.target.value);
     setDisable(false);
-    //props.dispatch(setAuthedUser(e.target.value));
     console.log(e.target.value);
   };
 
@@ -25,7 +30,8 @@ const Login = (props) => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1 className="center">Welcome to Employee Polls App</h1>
+      <h3 className="center">Select user to Login</h3>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Select User</InputLabel>
         <Select
@@ -40,9 +46,16 @@ const Login = (props) => {
           <MenuItem value={"zoshikanlu"}>Zenobia Oshikanlu</MenuItem>
         </Select>
       </FormControl>
-      <button onClick={handleLogin} disabled={disble}>
+
+      <Button
+        sx={{ mt: 4 }}
+        fullWidth
+        variant="contained"
+        onClick={handleLogin}
+        disabled={disble}
+      >
         Login
-      </button>
+      </Button>
     </div>
   );
 };

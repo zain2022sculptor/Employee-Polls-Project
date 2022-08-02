@@ -57,6 +57,11 @@ const ShowQuestion = (props) => {
   return (
     <div>
       <h2 className="center">Poll by {props.question.author}</h2>
+      <img
+        src={props.user.avatarURL}
+        alt={`Avatar of ${props.question.author}`}
+        className="avatar center"
+      />
       {answered ? (
         <h5 className="center">Answered by: {totalAnswers} of 4 Employees</h5>
       ) : (

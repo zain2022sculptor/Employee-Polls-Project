@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { handleInitialData } from "../actions/shared";
 import Dashboard from "./Dashboard";
-import Home from "./Home";
 import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
 import NewQuestion from "./NewQuestion";
 import ShowQuestion from "./ShowQuestion";
-import { setAuthedUser } from "../actions/authedUser";
 import Login from "./Login";
+import LoadingBar from "react-redux-loading-bar";
 
 function App(props) {
   useEffect(() => {
@@ -17,10 +16,11 @@ function App(props) {
   }, []);
 
   return (
-    <Fragment>
-      <div className="container">
-        {props.loggedIn ? <Navbar /> : null}
-        {props.loading === true ? null : (
+    <div>
+      <LoadingBar />
+      <Fragment>
+        <div className="container">
+          {props.loggedIn ? <Navbar /> : null}
           <div>
             <Routes>
               <Route path="/" exact element={<Login />} />
@@ -30,9 +30,9 @@ function App(props) {
               <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </div>
-        )}
-      </div>
-    </Fragment>
+        </div>
+      </Fragment>
+    </div>
   );
 }
 

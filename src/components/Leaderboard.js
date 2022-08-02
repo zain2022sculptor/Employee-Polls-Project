@@ -1,4 +1,6 @@
 import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TableContainer,
   TableHead,
@@ -9,51 +11,70 @@ import {
 } from "@mui/material";
 
 const Leaderboard = (props) => {
-  console.log(props);
-  const userIDs = Object.keys(props.users);
+  const navigate = useNavigate();
 
-  console.log(userIDs);
-  userIDs.sort((a, b) => {
-    return props.users[b].questions.length - props.users[a].questions.length;
-  });
+  useEffect(() => {
+    if (props.authedUser === null) {
+      navigate("/");
+    }
+  }, []);
 
-  console.log(userIDs);
-
-  console.log(Object.keys(props.users[props.authedUser].answers).length);
   return (
     <div>
-      <h1>Leaderboard</h1>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Users</TableCell>
-            <TableCell>Answered</TableCell>
-            <TableCell>Created</TableCell>
-          </TableRow>
-        </TableHead>
-        {userIDs.map((userID) => {
-          return (
-            <TableBody key={userID}>
+      {props.authedUser === null ? (
+        <h2>Redirecting to Login</h2>
+      ) : (
+        <div>
+          <h1>Leaderboard</h1>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell>
-                  <div>{props.users[userID].name}</div>
-                  <div>{userID}</div>
-                </TableCell>
-                <TableCell>
-                  {Object.keys(props.users[userID].answers).length}
-                </TableCell>
-                <TableCell>{props.users[userID].questions.length}</TableCell>
+                <TableCell>Avatars</TableCell>
+                <TableCell>Users</TableCell>
+                <TableCell>Answered</TableCell>
+                <TableCell>Created</TableCell>
               </TableRow>
-            </TableBody>
-          );
-        })}
-      </Table>
+            </TableHead>
+            {props.userIDs.map((userID) => {
+              return (
+                <TableBody key={userID}>
+                  <TableRow>
+                    <TableCell>
+                      <img
+                        src={props.users[userID].avatarURL}
+                        alt={`Avatar of ${props.users[userID].name}`}
+                        className="avatar center"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div>{props.users[userID].name}</div>
+                      <div>{userID}</div>
+                    </TableCell>
+                    <TableCell>
+                      {Object.keys(props.users[userID].answers).length}
+                    </TableCell>
+                    <TableCell>
+                      {props.users[userID].questions.length}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              );
+            })}
+          </Table>
+        </div>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = ({ users, authedUser }) => {
+  const userIDs = Object.keys(users);
+  userIDs.sort((a, b) => {
+    return users[b].questions.length - users[a].questions.length;
+  });
+
   return {
+    userIDs,
     users,
     authedUser,
   };

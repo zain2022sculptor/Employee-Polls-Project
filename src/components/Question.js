@@ -1,6 +1,13 @@
 import { connect } from "react-redux";
 import { formatDate } from "../utils/helper";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
 const Question = (props) => {
   //console.log(props.Question.id);
@@ -10,11 +17,18 @@ const Question = (props) => {
     navigate(`/question/${props.id}`);
   };
   return (
-    <div className="tweet">
-      <div>{props.author}</div>
-      <div>{props.datetime}</div>
-
-      <button onClick={handleNav}>Show</button>
+    <div>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>{props.author}</TableCell>
+            <TableCell>{props.datetime}</TableCell>
+            <TableCell>
+              <button onClick={handleNav}>Show</button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
   );
 };
