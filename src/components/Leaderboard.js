@@ -9,20 +9,21 @@ import {
   TableBody,
   Table,
 } from "@mui/material";
+import Login from "./Login";
 
 const Leaderboard = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (props.authedUser === null) {
-      navigate("/");
+      //navigate("/");
     }
   }, []);
 
   return (
     <div>
       {props.authedUser === null ? (
-        <h2>Redirecting to Login</h2>
+        <Login />
       ) : (
         <div>
           <Table>
@@ -69,7 +70,9 @@ const Leaderboard = (props) => {
 const mapStateToProps = ({ users, authedUser }) => {
   const userIDs = Object.keys(users);
   userIDs.sort((a, b) => {
-    return users[b].questions.length - users[a].questions.length;
+    const i = Object.keys(users[a].answers).length + users[a].questions.length;
+    const j = Object.keys(users[b].answers).length + users[b].questions.length;
+    return j - i;
   });
 
   return {

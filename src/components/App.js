@@ -9,6 +9,7 @@ import NewQuestion from "./NewQuestion";
 import ShowQuestion from "./ShowQuestion";
 import Login from "./Login";
 import LoadingBar from "react-redux-loading-bar";
+import PageNotFound from "./PageNotFound";
 
 function App(props) {
   useEffect(() => {
@@ -25,9 +26,10 @@ function App(props) {
             <Routes>
               <Route path="/" exact element={<Login />} />
               <Route path="/home" element={<Dashboard />} />
-              <Route path="/new" element={<NewQuestion />} />
-              <Route path="/question/:id" element={<ShowQuestion />} />
+              <Route path="/add" element={<NewQuestion />} />
+              <Route path="/questions/:id" element={<ShowQuestion />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </div>
         </div>

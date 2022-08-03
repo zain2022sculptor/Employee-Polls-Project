@@ -3,20 +3,21 @@ import DoneQuestionBlock from "./DoneQuestionBlock";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Login from "./Login";
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (props.loggedIn) {
-      navigate("/");
+      //navigate("/");
     }
   }, []);
 
   return (
     <div>
       {props.loggedIn ? (
-        <h2>Redirecting to Login</h2>
+        <Login />
       ) : (
         <div data-testid="result">
           <NewQuestionBlock />

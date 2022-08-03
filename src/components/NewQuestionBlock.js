@@ -23,6 +23,9 @@ const mapStateToProps = ({ users, authedUser, questions }) => {
   const newQ = Object.keys(questions).filter((id) => {
     return !ansQ.includes(id);
   });
+  newQ.sort((a, b) => {
+    return questions[b].timestamp - questions[a].timestamp;
+  });
 
   return {
     QuestionID: newQ,

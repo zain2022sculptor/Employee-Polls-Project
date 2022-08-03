@@ -7,7 +7,7 @@ const Question = (props) => {
   const navigate = useNavigate();
 
   const handleNav = () => {
-    navigate(`/question/${props.id}`);
+    navigate(`/questions/${props.id}`);
   };
   return (
     <div>

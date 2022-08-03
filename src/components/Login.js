@@ -8,7 +8,18 @@ import {
 import { useState } from "react";
 import { setAuthedUser } from "../actions/authedUser";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+
+const withRouter = (Component) => {
+  const ComponentWithRouterProp = (props) => {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return <Component {...props} router={{ location, navigate, params }} />;
+  };
+
+  return ComponentWithRouterProp;
+};
 
 const Login = (props) => {
   const [user, setUser] = useState("");
@@ -25,7 +36,9 @@ const Login = (props) => {
 
   const handleLogin = () => {
     props.dispatch(setAuthedUser(user));
-    navigate("/home");
+    if (props.path === "/") {
+      navigate("/home");
+    }
   };
 
   return (
@@ -61,4 +74,11 @@ const Login = (props) => {
   );
 };
 
-export default connect()(Login);
+const mapStateToProps = ({}, props) => {
+  const path = props.router.location.pathname;
+  return {
+    path,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Login));

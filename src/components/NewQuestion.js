@@ -3,6 +3,7 @@ import { handleAddQuestion } from "../actions/shared";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Login from "./Login";
 
 const NewQuestion = (props) => {
   const [option1, setOption1] = useState("");
@@ -11,7 +12,7 @@ const NewQuestion = (props) => {
 
   useEffect(() => {
     if (props.authedUser === null) {
-      navigate("/");
+      //navigate("/");
     }
   }, []);
 
@@ -35,10 +36,11 @@ const NewQuestion = (props) => {
   return (
     <div>
       {props.authedUser === null ? (
-        <h2>Redirecting to Login</h2>
+        <Login />
       ) : (
         <div>
           <h3 className="center">Create a new Poll</h3>
+          <h3 className="center">Would you Rather</h3>
           <form className="new-question" onSubmit={handleSubmit}>
             <h4 className="center">First Option</h4>
             <textarea

@@ -18,8 +18,11 @@ const DoneQuestionBlock = (props) => {
   );
 };
 
-const mapStateToProps = ({ users, authedUser }) => {
+const mapStateToProps = ({ users, authedUser, questions }) => {
   const ansQ = Object.keys(users[authedUser].answers);
+  ansQ.sort((a, b) => {
+    return questions[b].timestamp - questions[a].timestamp;
+  });
 
   return {
     QuestionID: ansQ,

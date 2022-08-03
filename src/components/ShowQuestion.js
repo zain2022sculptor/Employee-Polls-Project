@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { handleAddQuestAns } from "../actions/shared";
 import { useState } from "react";
+import Login from "./Login";
+import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -21,6 +24,8 @@ const withRouter = (Component) => {
 };
 
 const ShowQuestion = (props) => {
+  const navigate = useNavigate();
+
   const [vote, setVote] = useState(
     props.user.answers[props.id] ? props.user.answers[props.id] : ""
   );
@@ -45,64 +50,70 @@ const ShowQuestion = (props) => {
 
   return (
     <div>
-      <div className="question" data-testid="button">
-        <img
-          src={props.avatar}
-          alt={`Avatar of ${props.question.author}`}
-          className="avatar"
-        />
-        <h2 className="center">Poll by {props.question.author}</h2>
-      </div>
-      {answered ? (
-        <h5 className="center" data-testid="show-answers">
-          Answered by: {totalAnswers} of 4 Employees
-        </h5>
+      {props.loggedIn ? (
+        <Login />
       ) : (
-        ""
+        <div>
+          <div className="question" data-testid="button">
+            <img
+              src={props.avatar}
+              alt={`Avatar of ${props.question.author}`}
+              className="avatar"
+            />
+            <h2 className="center">Poll by {props.question.author}</h2>
+          </div>
+          {answered ? (
+            <h5 className="center" data-testid="show-answers">
+              Answered by: {totalAnswers} of 4 Employees
+            </h5>
+          ) : (
+            ""
+          )}
+
+          <h4 className="center">Would you rather</h4>
+
+          <div className="center">
+            <FormControl>
+              <RadioGroup
+                name="radio-buttons-group"
+                data-testid="radio-button"
+                value={vote}
+                onChange={handleVote}
+              >
+                <FormControlLabel
+                  value="optionOne"
+                  control={<Radio />}
+                  label={props.question.optionOne.text}
+                  disabled={answered}
+                />
+                {answered ? (
+                  <div>
+                    {Math.floor((optionOneAnswers / totalAnswers) * 100)} %
+                    answered Option One
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                <FormControlLabel
+                  value="optionTwo"
+                  control={<Radio />}
+                  label={props.question.optionTwo.text}
+                  disabled={answered}
+                />
+                {answered ? (
+                  <div>
+                    {Math.floor((optionTwoAnswers / totalAnswers) * 100)} %
+                    answered Option Two
+                  </div>
+                ) : (
+                  ""
+                )}
+              </RadioGroup>
+            </FormControl>
+          </div>
+        </div>
       )}
-
-      <h4 className="center">Would you rather</h4>
-
-      <div className="center">
-        <FormControl>
-          <RadioGroup
-            name="radio-buttons-group"
-            data-testid="radio-button"
-            value={vote}
-            onChange={handleVote}
-          >
-            <FormControlLabel
-              value="optionOne"
-              control={<Radio />}
-              label={props.question.optionOne.text}
-              disabled={answered}
-            />
-            {answered ? (
-              <div>
-                {Math.floor((optionOneAnswers / totalAnswers) * 100)} % answered
-                Option One
-              </div>
-            ) : (
-              ""
-            )}
-
-            <FormControlLabel
-              value="optionTwo"
-              control={<Radio />}
-              label={props.question.optionTwo.text}
-              disabled={answered}
-            />
-            {answered ? (
-              <div>
-                {Math.floor((optionTwoAnswers / totalAnswers) * 100)} % answered
-                Option Two
-              </div>
-            ) : (
-              ""
-            )}
-          </RadioGroup>
-        </FormControl>
-      </div>
     </div>
   );
 };
@@ -114,6 +125,7 @@ const mapStateToProps = ({ authedUser, questions, users }, props) => {
   const avatar = users[question.author].avatarURL;
 
   return {
+    loggedIn: authedUser === null,
     id,
     question,
     user,
