@@ -11,6 +11,7 @@ import { useState } from "react";
 import Login from "./Login";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -25,17 +26,34 @@ const withRouter = (Component) => {
 
 const ShowQuestion = (props) => {
   const navigate = useNavigate();
+  const [vote, setVote] = useState("");
+  const [answered, setAnswered] = useState(false);
 
-  const [vote, setVote] = useState(
-    props.user.answers[props.id] ? props.user.answers[props.id] : ""
-  );
+  const question = props.questions[props.id];
+  const user = props.users[props.authedUser];
+  const avatar = question ? props.users[question.author].avatarURL : "";
 
-  const [answered, setAnswered] = useState(
-    props.user.answers[props.id] ? true : false
-  );
+  useEffect(() => {
+    if (question && user) {
+      setVote(user.answers[props.id] ? user.answers[props.id] : "");
+      setAnswered(user.answers[props.id] ? true : false);
+    }
+  }, []);
 
-  const optionOneAnswers = props.question.optionOne.votes.length;
-  const optionTwoAnswers = props.question.optionTwo.votes.length;
+  if (!question || !user) {
+    return <PageNotFound />;
+  }
+
+  // const [vote, setVote] = useState(
+  //   user.answers[props.id] ? user.answers[props.id] : ""
+  // );
+
+  // const [answered, setAnswered] = useState(
+  //   user.answers[props.id] ? true : false
+  // );
+
+  const optionOneAnswers = question.optionOne.votes.length;
+  const optionTwoAnswers = question.optionTwo.votes.length;
 
   const totalAnswers = optionOneAnswers + optionTwoAnswers;
 
@@ -56,11 +74,11 @@ const ShowQuestion = (props) => {
         <div>
           <div className="question" data-testid="button">
             <img
-              src={props.avatar}
-              alt={`Avatar of ${props.question.author}`}
+              src={avatar}
+              alt={`Avatar of ${question.author}`}
               className="avatar"
             />
-            <h2 className="center">Poll by {props.question.author}</h2>
+            <h2 className="center">Poll by {question.author}</h2>
           </div>
           {answered ? (
             <h5 className="center" data-testid="show-answers">
@@ -83,7 +101,7 @@ const ShowQuestion = (props) => {
                 <FormControlLabel
                   value="optionOne"
                   control={<Radio />}
-                  label={props.question.optionOne.text}
+                  label={question.optionOne.text}
                   disabled={answered}
                 />
                 {answered ? (
@@ -98,7 +116,7 @@ const ShowQuestion = (props) => {
                 <FormControlLabel
                   value="optionTwo"
                   control={<Radio />}
-                  label={props.question.optionTwo.text}
+                  label={question.optionTwo.text}
                   disabled={answered}
                 />
                 {answered ? (
@@ -120,16 +138,13 @@ const ShowQuestion = (props) => {
 
 const mapStateToProps = ({ authedUser, questions, users }, props) => {
   const { id } = props.router.params;
-  const question = questions[id];
-  const user = users[authedUser];
-  const avatar = users[question.author].avatarURL;
 
   return {
     loggedIn: authedUser === null,
     id,
-    question,
-    user,
-    avatar,
+    questions,
+    users,
+    authedUser,
   };
 };
 

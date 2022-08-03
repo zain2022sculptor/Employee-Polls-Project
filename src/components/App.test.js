@@ -1,11 +1,11 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "../index";
 import { BrowserRouter } from "react-router-dom";
 
-describe("find answered questions", () => {
+describe("fire event on button", () => {
   it("will find Answered Questions in the Document", () => {
     var view = render(
       <Provider store={store}>
@@ -14,8 +14,8 @@ describe("find answered questions", () => {
         </BrowserRouter>
       </Provider>
     );
-    var submitButton = view.getByTestId("button");
+    var submitButton = screen.getByTestId("button");
     fireEvent.click(submitButton);
-    expect(view.getByTestId("result")).toBeInTheDocument();
+    expect(screen.getByTestId("result")).toBeInTheDocument();
   });
 });
