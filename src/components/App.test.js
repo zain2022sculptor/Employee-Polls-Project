@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
 import App from "./App";
@@ -14,8 +14,8 @@ describe("fire event on button", () => {
         </BrowserRouter>
       </Provider>
     );
-    var submitButton = screen.getByTestId("button");
-    fireEvent.click(submitButton);
-    expect(screen.getByTestId("result")).toBeInTheDocument();
+    var input = view.getByTestId("select-user").querySelector("input");
+    fireEvent.change(input, { target: { value: "sarahedo" } });
+    expect(input).toHaveValue("sarahedo");
   });
 });

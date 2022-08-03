@@ -46,8 +46,9 @@ const Login = (props) => {
       <h1 className="center">Welcome to Employee Polls App</h1>
       <h3 className="center">Select user to Login</h3>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Select User</InputLabel>
+        <InputLabel>Select User</InputLabel>
         <Select
+          data-testid="select-user"
           labelId="demo-simple-select-label"
           value={user}
           label="Select User"
